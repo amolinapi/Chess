@@ -36,6 +36,9 @@ public:
     Vector2f getPosition();
     void setPosition(Vector2f position);
 
+    Vector2u getPositionGrid() { return position; }
+    void setPositionGrid(Vector2u newPos) { position = newPos; }
+
     Sprite getSprite();
     void setSprite(Sprite sprite);
 
@@ -49,7 +52,7 @@ public:
     Piece::PieceColor getColorSide();
     void setColorSide(PieceColor c);
 
-    virtual void move(const Vector2f& pos) = 0;
+    virtual bool canMoveTo(int startX, int startY, int endX, int endY, std::unique_ptr<Piece> grid[8][8]) = 0;
 
 private:
 
@@ -58,6 +61,7 @@ private:
 protected:
     Piece::PieceColor color;
     Piece::Type type;
+    Vector2u position;
 };
 
 #endif // !PIECE_H

@@ -43,6 +43,7 @@ private:
     std::unique_ptr<Piece> grid[8][8];
 
     std::map<Piece::Type, Texture> textures;
+    std::pair<int, int> selectedPiece = { -1, -1 };
 };
 
 #endif // !BOARD_H

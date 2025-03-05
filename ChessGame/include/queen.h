@@ -11,7 +11,7 @@ public:
 
     Queen();
 
-    void move(const Vector2f& pos) override;
+    bool canMoveTo(int startX, int startY, int endX, int endY, std::unique_ptr<Piece> grid[8][8]) override;
 
 private:
 
