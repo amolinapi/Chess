@@ -1,5 +1,15 @@
-﻿  king.cpp
-  night.cpp
-  rook.cpp
-  Generando código...
+﻿  board.cpp
+F:\Chess\ChessGame\include\board.h(9,10): warning C4067: símbolos (token) inesperados después de la directiva del preprocesador; se esperaba una nueva línea
+  (compilando archivo de origen "../src/board.cpp")
+  
+F:\Chess\ChessGame\src\board.cpp(165,21): warning C4244: 'inicializando': conversión de 'T' a 'int'; posible pérdida de datos
+F:\Chess\ChessGame\src\board.cpp(165,21): warning C4244:         with
+F:\Chess\ChessGame\src\board.cpp(165,21): warning C4244:         [
+F:\Chess\ChessGame\src\board.cpp(165,21): warning C4244:             T=float
+F:\Chess\ChessGame\src\board.cpp(165,21): warning C4244:         ]
+F:\Chess\ChessGame\src\board.cpp(166,21): warning C4244: 'inicializando': conversión de 'T' a 'int'; posible pérdida de datos
+F:\Chess\ChessGame\src\board.cpp(166,21): warning C4244:         with
+F:\Chess\ChessGame\src\board.cpp(166,21): warning C4244:         [
+F:\Chess\ChessGame\src\board.cpp(166,21): warning C4244:             T=float
+F:\Chess\ChessGame\src\board.cpp(166,21): warning C4244:         ]
   ChessGame.vcxproj -> F:\Chess\ChessGame\x64\Debug\ChessGame.exe

@@ -9,6 +9,13 @@ Board::Board()
     textures[Piece::Type::BISHOP].loadFromFile("../data/textures/BishopWhite.png");
     textures[Piece::Type::NIGHT].loadFromFile("../data/textures/NightWhite.png");
     textures[Piece::Type::PAWN].loadFromFile("../data/textures/PawnWhite.png");
+
+    texturesBlack[Piece::Type::KING].loadFromFile("../data/textures/KingBlack.png");
+    texturesBlack[Piece::Type::QUEEN].loadFromFile("../data/textures/QueenBlack.png");
+    texturesBlack[Piece::Type::ROOK].loadFromFile("../data/textures/RookBlack.png");
+    texturesBlack[Piece::Type::BISHOP].loadFromFile("../data/textures/BishopBlack.png");
+    texturesBlack[Piece::Type::NIGHT].loadFromFile("../data/textures/NightBlack.png");
+    texturesBlack[Piece::Type::PAWN].loadFromFile("../data/textures/PawnBlack.png");
 }
 
 int Board::createBoard()
@@ -28,6 +35,19 @@ int Board::createBoard()
     float posY = 400 - (board_sprite.getGlobalBounds().height / 2);
     board_sprite.setPosition(posX, posY);
     
+    if (!valid_cell_texture.loadFromFile("../data/textures/direction.png")) {
+        return EXIT_FAILURE;
+    }
+    valid_cell_sprite.setTexture(valid_cell_texture);
+    valid_cell_sprite.setScale(2.0833f, 2.0833f);
+    valid_cell_sprite.setColor(Color(255,255,255,128));
+    if (!kill_cell_texture.loadFromFile("../data/textures/direction2.png")) {
+        return EXIT_FAILURE;
+    }
+    kill_cell_sprite.setTexture(kill_cell_texture);
+    kill_cell_sprite.setScale(2.0833f, 2.0833f);
+    kill_cell_sprite.setColor(Color(255, 255, 255, 128));
+
     return 0;
 }
 
@@ -78,13 +98,12 @@ int Board::createPieces()
     for (int x = 0; x < 8; x++) {
         for (int y = 0; y < 8; y++) {
             if (grid[x][y]) {
-                grid[x][y]->setTexture(textures[grid[x][y]->getType()]);
                 if (y <= 1) {
-                    grid[x][y]->setColor(Piece::PieceColor::BLACK);
+                    grid[x][y]->setTexture(texturesBlack[grid[x][y]->getType()]);
                     grid[x][y]->setColorSide(Piece::PieceColor::BLACK);
                 }
                 else if (y >= 6) {
-                    grid[x][y]->setColor(Piece::PieceColor::WHITE);
+                    grid[x][y]->setTexture(textures[grid[x][y]->getType()]);
                     grid[x][y]->setColorSide(Piece::PieceColor::WHITE);
                 }
                 grid[x][y]->setScale(2.0833f, 2.0833f);
@@ -102,6 +121,22 @@ void Board::handleClick(Vector2f mousePos)
             if (grid[x][y] && grid[x][y]->getSprite().getGlobalBounds().contains(mousePos)) {
                 if (selectedPiece.first == -1) {
                     selectedPiece = { x, y };
+                    moveHints.clear();
+                    killHints.clear();
+
+                    for (int i = 0; i < 8; i++) {
+                        for (int j = 0; j < 8; j++) {
+                            if (grid[x][y]->canMoveTo(x, y, i, j, grid)) {
+                                if (grid[i][j] && grid[i][j]->getColorSide()  != grid[x][y]->getColorSide()) {
+                                    killHints.emplace_back(i, j); // Casilla donde se puede capturar
+                                }
+                                else {
+                                    moveHints.emplace_back(i, j); // Casilla donde se puede mover
+                                }
+                            }
+                        }
+                    }
+
                     std::cout << "Pieza seleccionada en (" << x << ", " << y << ")\n";
                 }
                 else {
@@ -113,6 +148,8 @@ void Board::handleClick(Vector2f mousePos)
 
                     movePiece(startX, startY, x, y);
                     selectedPiece = { -1, -1 };
+                    moveHints.clear();
+                    killHints.clear();
                 }
                 return;
             }
@@ -133,6 +170,8 @@ void Board::handleClick(Vector2f mousePos)
 
         movePiece(startX, startY, targetX, targetY);
         selectedPiece = { -1, -1 };  // Desseleccionar la pieza después del movimiento
+        moveHints.clear();
+        killHints.clear();
     }
 }
 
@@ -175,6 +214,21 @@ void Board::draw(RenderWindow* window)
     if (window) {
         window->draw(chess_board_sprite);
         window->draw(board_sprite);
+
+        if (!moveHints.empty()) {
+            for (const auto& pos : moveHints) {
+                valid_cell_sprite.setPosition(gridToPixel(pos.first, pos.second));
+                window->draw(valid_cell_sprite);
+            }
+        }
+        
+        if (!killHints.empty()) {
+            for (const auto& pos : killHints) {
+                kill_cell_sprite.setPosition(gridToPixel(pos.first, pos.second));
+                window->draw(kill_cell_sprite);
+            }
+        }
+               
 
         for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {

@@ -26,11 +26,12 @@ int GameLoop::createBoard()
 
 int GameLoop::loadFonts()
 {
-    if (!font.loadFromFile("../data/font/Arial.ttf")) {
+    if (!font.loadFromFile("../data/font/LLPIXEL3.ttf")) {
         return EXIT_FAILURE;
     }
     text = Text("CHESS GAME", font);
     text.setCharacterSize(40);
+    text.setFillColor(Color(90, 61, 32));
 
     FloatRect textBounds = text.getGlobalBounds();
 

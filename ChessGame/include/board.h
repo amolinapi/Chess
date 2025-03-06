@@ -40,10 +40,19 @@ private:
     Texture board_texture;
     Sprite board_sprite;
 
+    Texture valid_cell_texture;
+    Sprite valid_cell_sprite;
+
+    Texture kill_cell_texture;
+    Sprite kill_cell_sprite;
+
     std::unique_ptr<Piece> grid[8][8];
 
     std::map<Piece::Type, Texture> textures;
+    std::map<Piece::Type, Texture> texturesBlack;
     std::pair<int, int> selectedPiece = { -1, -1 };
+    std::vector<std::pair<int, int>> moveHints;
+    std::vector<std::pair<int, int>> killHints;
 };
 
 #endif // !BOARD_H
