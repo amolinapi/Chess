@@ -20,24 +20,20 @@ int GameLoop::createBoard()
     board.createBoard();
     board.initializePieces();
     board.createPieces();
+    board.loadFonts();
 
     return 0;
 }
 
-int GameLoop::loadFonts()
+int GameLoop::loadMusic()
 {
-    if (!font.loadFromFile("../data/font/LLPIXEL3.ttf")) {
+    if (!musica.openFromFile("../data/audio/background.wav")) {
         return EXIT_FAILURE;
     }
-    text = Text("CHESS GAME", font);
-    text.setCharacterSize(40);
-    text.setFillColor(Color(90, 61, 32));
 
-    FloatRect textBounds = text.getGlobalBounds();
-
-    float centerX = (windowSizeX - textBounds.width) / 2.0f;
-
-    text.setPosition(centerX,0);
+    musica.setLoop(true);
+    musica.setVolume(20);
+    musica.play();
     
     return 0;
 }
@@ -52,7 +48,7 @@ int GameLoop::createWindow()
 int GameLoop::draw()
 {
     createBoard();
-    loadFonts();
+    loadMusic(),
 
     window->setFramerateLimit(60);
 
@@ -66,7 +62,6 @@ int GameLoop::draw()
 
         //Draw
         board.draw(window.get());
-        window.get()->draw(text);
 
         //Update Window
         window->display();

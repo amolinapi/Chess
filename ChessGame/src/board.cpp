@@ -16,6 +16,31 @@ Board::Board()
     texturesBlack[Piece::Type::BISHOP].loadFromFile("../data/textures/BishopBlack.png");
     texturesBlack[Piece::Type::NIGHT].loadFromFile("../data/textures/NightBlack.png");
     texturesBlack[Piece::Type::PAWN].loadFromFile("../data/textures/PawnBlack.png");
+
+    turn = Piece::PieceColor::WHITE;
+}
+
+int Board::loadFonts()
+{
+    if (!font.loadFromFile("../data/font/LLPIXEL3.ttf")) {
+        return EXIT_FAILURE;
+    }
+    title = Text("CHESS GAME", font);
+    title.setCharacterSize(40);
+    title.setFillColor(Color(90, 61, 32));
+
+    FloatRect textBounds = title.getGlobalBounds();
+
+    float centerX = (chess_board_sprite.getGlobalBounds().width - textBounds.width) / 2.0f;
+
+    title.setPosition(centerX, 0);
+
+    turnText = Text("Turn: White", font);
+    turnText.setCharacterSize(25);
+    float turnX = (chess_board_sprite.getGlobalBounds().width - turnText.getGlobalBounds().width) - 25.0f;
+    turnText.setPosition(turnX, title.getGlobalBounds().height / 2.0f);
+
+    return 0;
 }
 
 int Board::createBoard()
@@ -118,7 +143,7 @@ void Board::handleClick(Vector2f mousePos)
 {
     for (int x = 0; x < 8; x++) {
         for (int y = 0; y < 8; y++) {
-            if (grid[x][y] && grid[x][y]->getSprite().getGlobalBounds().contains(mousePos)) {
+            if (grid[x][y] && grid[x][y]->getSprite().getGlobalBounds().contains(mousePos) && grid[x][y]->getColorSide() == turn) {
                 if (selectedPiece.first == -1) {
                     selectedPiece = { x, y };
                     moveHints.clear();
@@ -177,9 +202,15 @@ void Board::handleClick(Vector2f mousePos)
 
 void Board::movePiece(int startX, int startY, int endX, int endY)
 {
+    
     // Verificar que la casilla de origen contiene una pieza
     if (!grid[startX][startY]) {
         std::cout << "No hay pieza en la posición de origen.\n";
+        return;
+    }
+
+    if (grid[startX][startY]->getColorSide() != turn) {
+        std::cout << "No es el turno de esta ficha";
         return;
     }
 
@@ -205,6 +236,18 @@ void Board::movePiece(int startX, int startY, int endX, int endY)
     grid[endX][endY] = std::move(grid[startX][startY]);
     grid[endX][endY]->setPosition(gridToPixel(endX, endY)); // Actualizar la posición en pantalla
     grid[startX][startY] = nullptr; // Vaciar la casilla de origen
+
+
+    if (turn == Piece::PieceColor::WHITE) {
+        turn = Piece::PieceColor::BLACK;
+        turnText.setString("Turn: Black");
+        turnText.setFillColor(Color::Black);
+    }
+    else {
+        turn = Piece::PieceColor::WHITE;
+        turnText.setString("Turn: White");
+        turnText.setFillColor(Color::White);
+    }
 
     std::cout << "Pieza movida de (" << startX << ", " << startY << ") a (" << endX << ", " << endY << ")\n";
 }
@@ -238,5 +281,7 @@ void Board::draw(RenderWindow* window)
             }
         }
 
+        window->draw(title);
+        window->draw(turnText);
     }
 }

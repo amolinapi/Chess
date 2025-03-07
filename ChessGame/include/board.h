@@ -22,6 +22,7 @@ public:
 
     Board();
 
+    int loadFonts();
     int createBoard();
     void initializePieces();
     Vector2f gridToPixel(int x, int y);
@@ -53,6 +54,11 @@ private:
     std::pair<int, int> selectedPiece = { -1, -1 };
     std::vector<std::pair<int, int>> moveHints;
     std::vector<std::pair<int, int>> killHints;
+
+    Piece::PieceColor turn;
+    Font font;
+    Text title;
+    Text turnText;
 };
 
 #endif // !BOARD_H

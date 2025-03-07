@@ -3,6 +3,7 @@
 #define GAMELOOP_H
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <memory>
 #include <vector>
 #include "board.h"
@@ -18,7 +19,7 @@ public:
     GameLoop(int sizeX, int sizeY);
 
     int createBoard();
-    int loadFonts();
+    int loadMusic();
 
     int createWindow();
     int draw();
@@ -30,9 +31,7 @@ private:
     unsigned int windowSizeY;
     Board board;
     InputHandler inputHandler;
-    Font font;
-    Text text;
-
+    Music musica;
 };
 
 #endif // !GAMELOOP
