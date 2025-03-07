@@ -3,7 +3,6 @@
 #define PIECE_H
 
 #include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
 
 using namespace sf;
 

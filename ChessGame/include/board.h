@@ -3,6 +3,7 @@
 #define BOARD_H
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <vector>
 #include <map>
 
@@ -22,6 +23,7 @@ public:
 
     Board();
 
+    int loadSounds();
     int loadFonts();
     int createBoard();
     void initializePieces();
@@ -30,6 +32,8 @@ public:
 
     void handleClick(Vector2f mousePos);
     void movePiece(int startX, int startY, int endX, int endY);
+
+    void resetGame();
 
     void draw(RenderWindow* window);
 
@@ -59,6 +63,13 @@ private:
     Font font;
     Text title;
     Text turnText;
+
+    SoundBuffer moveBuffer;
+    SoundBuffer captureBuffer;
+    SoundBuffer winBuffer;
+    Sound moveSound;
+    Sound captureSound;
+    Sound winSound;
 };
 
 #endif // !BOARD_H

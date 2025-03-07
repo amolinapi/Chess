@@ -21,6 +21,7 @@ int GameLoop::createBoard()
     board.initializePieces();
     board.createPieces();
     board.loadFonts();
+    board.loadSounds();
 
     return 0;
 }
@@ -32,7 +33,7 @@ int GameLoop::loadMusic()
     }
 
     musica.setLoop(true);
-    musica.setVolume(20);
+    musica.setVolume(5);
     musica.play();
     
     return 0;

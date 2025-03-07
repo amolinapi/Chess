@@ -1,5 +1,7 @@
 #include "board.h"
 #include <iostream>
+#include <thread>
+#include <chrono>
 
 Board::Board()
 {
@@ -18,6 +20,32 @@ Board::Board()
     texturesBlack[Piece::Type::PAWN].loadFromFile("../data/textures/PawnBlack.png");
 
     turn = Piece::PieceColor::WHITE;
+}
+
+int Board::loadSounds()
+{
+    if (!moveBuffer.loadFromFile("../data/audio/move.wav")) {
+        std::cerr << "Error al cargar move.wav" << std::endl;
+    }
+
+    moveSound.setBuffer(moveBuffer);
+    moveSound.setVolume(100);
+
+    if (!captureBuffer.loadFromFile("../data/audio/capture.wav")) {
+        std::cerr << "Error cargando el sonido de captura\n";
+    }
+
+    captureSound.setBuffer(captureBuffer);
+    captureSound.setVolume(100);
+
+    if (!winBuffer.loadFromFile("../data/audio/win.wav")) {
+        std::cerr << "Error cargando el sonido de captura\n";
+    }
+
+    winSound.setBuffer(winBuffer);
+    winSound.setVolume(100);
+    
+    return 0;
 }
 
 int Board::loadFonts()
@@ -194,7 +222,7 @@ void Board::handleClick(Vector2f mousePos)
             << ") a (" << targetX << ", " << targetY << ")\n";
 
         movePiece(startX, startY, targetX, targetY);
-        selectedPiece = { -1, -1 };  // Desseleccionar la pieza después del movimiento
+        selectedPiece = { -1, -1 }; 
         moveHints.clear();
         killHints.clear();
     }
@@ -228,9 +256,19 @@ void Board::movePiece(int startX, int startY, int endX, int endY)
 
     // Si hay una pieza en la casilla de destino, "capturarla" (en este caso, eliminarla)
     if (grid[endX][endY]) {
+        if (dynamic_cast<King*>(grid[endX][endY].get())) {
+            std::cout << "¡El rey ha sido capturado! Reiniciando partida...\n";
+            resetGame();
+            return;
+        }
         std::cout << "Capturando pieza en (" << endX << ", " << endY << ")\n";
+        captureSound.play();
         grid[endX][endY] = nullptr;
     }
+    else {
+        moveSound.play();
+    }
+
 
     // Mover la pieza a la nueva posición
     grid[endX][endY] = std::move(grid[startX][startY]);
@@ -250,6 +288,26 @@ void Board::movePiece(int startX, int startY, int endX, int endY)
     }
 
     std::cout << "Pieza movida de (" << startX << ", " << startY << ") a (" << endX << ", " << endY << ")\n";
+}
+
+void Board::resetGame()
+{
+    winSound.play();
+    for (int x = 0; x < 8; x++) {
+        for (int y = 0; y < 8; y++) {
+            grid[x][y] = nullptr;
+        }
+    }
+
+    selectedPiece = { -1, -1 };
+    moveHints.clear();
+    killHints.clear();
+    turn = Piece::PieceColor::WHITE;
+    turnText.setString("Turn: White");
+    turnText.setFillColor(Color::White);
+
+    initializePieces();
+    createPieces();
 }
 
 void Board::draw(RenderWindow* window)
