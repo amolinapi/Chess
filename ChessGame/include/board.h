@@ -36,6 +36,10 @@ public:
     void resetGame();
 
     void draw(RenderWindow* window);
+    bool isValidPosition(int x, int y);
+    bool isKingInCheck(Piece::PieceColor isWhite);
+    bool isCheckmate(Piece::PieceColor isWhite);
+    void checkGameState();
 
 private:
 

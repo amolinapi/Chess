@@ -287,6 +287,8 @@ void Board::movePiece(int startX, int startY, int endX, int endY)
         turnText.setFillColor(Color::White);
     }
 
+    checkGameState();
+
     std::cout << "Pieza movida de (" << startX << ", " << startY << ") a (" << endX << ", " << endY << ")\n";
 }
 
@@ -341,5 +343,101 @@ void Board::draw(RenderWindow* window)
 
         window->draw(title);
         window->draw(turnText);
+    }
+}
+
+bool Board::isValidPosition(int x, int y)
+{
+    return (x >= 0 && x < 8 && y >= 0 && y < 8);
+}
+
+bool Board::isKingInCheck(Piece::PieceColor isWhite)
+{
+    int kingX = -1, kingY = -1;
+    for (int x = 0; x < 8; x++) {
+        for (int y = 0; y < 8; y++) {
+            if (grid[x][y] && grid[x][y]->getType() == Piece::Type::KING && grid[x][y]->getColorSide() == isWhite) {
+                kingX = x;
+                kingY = y;
+                break;
+            }
+        }
+    }
+
+    // Verificar si alguna pieza enemiga puede moverse a la casilla del rey
+    for (int x = 0; x < 8; x++) {
+        for (int y = 0; y < 8; y++) {
+            if (grid[x][y] && grid[x][y]->getColorSide() != isWhite) { // Pieza enemiga
+                if (grid[x][y]->canMoveTo(x, y, kingX, kingY, grid)) {
+                    return true; // ¡El rey está en jaque!
+                }
+            }
+        }
+    }
+    
+    return false;
+}
+
+bool Board::isCheckmate(Piece::PieceColor isWhite)
+{
+    if (!isKingInCheck(isWhite)) {
+        return false; // No está en jaque, no es jaque mate
+    }
+
+    // Intentar mover el rey a una casilla segura
+    int kingX = -1, kingY = -1;
+    for (int x = 0; x < 8; x++) {
+        for (int y = 0; y < 8; y++) {
+            if (grid[x][y] && grid[x][y]->getType() == Piece::Type::KING && grid[x][y]->getColorSide() == isWhite) {
+                kingX = x;
+                kingY = y;
+                break;
+            }
+        }
+    }
+
+    // Revisar si el rey tiene movimientos válidos
+    int moves[8][2] = { {-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1} };
+
+    for (auto& move : moves) {
+        int newX = kingX + move[0];
+        int newY = kingY + move[1];
+
+        if (isValidPosition(newX, newY) && (!grid[newX][newY] || grid[newX][newY]->getColorSide() != isWhite)) {
+            // Simular movimiento del rey
+            std::unique_ptr<Piece> temp = std::move(grid[newX][newY]);
+            grid[newX][newY] = std::move(grid[kingX][kingY]);
+            grid[kingX][kingY] = nullptr;
+
+            bool stillInCheck = isKingInCheck(isWhite);
+
+            // Deshacer movimiento
+            grid[kingX][kingY] = std::move(grid[newX][newY]);
+            grid[newX][newY] = std::move(temp);
+
+            if (!stillInCheck) {
+                return false; // El rey puede escapar
+            }
+        }
+    }
+
+    return true;
+}
+
+void Board::checkGameState()
+{
+    if (isCheckmate(Piece::PieceColor::WHITE)) {
+        std::cout << "¡Jaque mate! Las negras ganan." << std::endl;
+        resetGame();
+    }
+    else if (isCheckmate(Piece::PieceColor::BLACK)) {
+        std::cout << "¡Jaque mate! Las blancas ganan." << std::endl;
+        resetGame();
+    }
+    else if (isKingInCheck(Piece::PieceColor::WHITE)) {
+        std::cout << "¡Las blancas están en jaque!" << std::endl;
+    }
+    else if (isKingInCheck(Piece::PieceColor::BLACK)) {
+        std::cout << "¡Las negras están en jaque!" << std::endl;
     }
 }

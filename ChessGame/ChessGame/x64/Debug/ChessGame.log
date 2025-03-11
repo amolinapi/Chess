@@ -1,38 +1,38 @@
 ﻿  board.cpp
-F:\Chess\ChessGame\include\board.h(10,10): warning C4067: símbolos (token) inesperados después de la directiva del preprocesador; se esperaba una nueva línea
+E:\Self-learning\Chess\ChessGame\include\board.h(10,10): warning C4067: símbolos (token) inesperados después de la directiva del preprocesador; se esperaba una nueva línea
   (compilando archivo de origen "../src/board.cpp")
   
-F:\Chess\ChessGame\src\board.cpp(218,21): warning C4244: 'inicializando': conversión de 'T' a 'int'; posible pérdida de datos
-F:\Chess\ChessGame\src\board.cpp(218,21): warning C4244:         with
-F:\Chess\ChessGame\src\board.cpp(218,21): warning C4244:         [
-F:\Chess\ChessGame\src\board.cpp(218,21): warning C4244:             T=float
-F:\Chess\ChessGame\src\board.cpp(218,21): warning C4244:         ]
-F:\Chess\ChessGame\src\board.cpp(219,21): warning C4244: 'inicializando': conversión de 'T' a 'int'; posible pérdida de datos
-F:\Chess\ChessGame\src\board.cpp(219,21): warning C4244:         with
-F:\Chess\ChessGame\src\board.cpp(219,21): warning C4244:         [
-F:\Chess\ChessGame\src\board.cpp(219,21): warning C4244:             T=float
-F:\Chess\ChessGame\src\board.cpp(219,21): warning C4244:         ]
+E:\Self-learning\Chess\ChessGame\src\board.cpp(218,21): warning C4244: 'inicializando': conversión de 'T' a 'int'; posible pérdida de datos
+E:\Self-learning\Chess\ChessGame\src\board.cpp(218,21): warning C4244:         with
+E:\Self-learning\Chess\ChessGame\src\board.cpp(218,21): warning C4244:         [
+E:\Self-learning\Chess\ChessGame\src\board.cpp(218,21): warning C4244:             T=float
+E:\Self-learning\Chess\ChessGame\src\board.cpp(218,21): warning C4244:         ]
+E:\Self-learning\Chess\ChessGame\src\board.cpp(219,21): warning C4244: 'inicializando': conversión de 'T' a 'int'; posible pérdida de datos
+E:\Self-learning\Chess\ChessGame\src\board.cpp(219,21): warning C4244:         with
+E:\Self-learning\Chess\ChessGame\src\board.cpp(219,21): warning C4244:         [
+E:\Self-learning\Chess\ChessGame\src\board.cpp(219,21): warning C4244:             T=float
+E:\Self-learning\Chess\ChessGame\src\board.cpp(219,21): warning C4244:         ]
   gameloop.cpp
-F:\Chess\ChessGame\include\board.h(10,10): warning C4067: símbolos (token) inesperados después de la directiva del preprocesador; se esperaba una nueva línea
+E:\Self-learning\Chess\ChessGame\include\board.h(10,10): warning C4067: símbolos (token) inesperados después de la directiva del preprocesador; se esperaba una nueva línea
   (compilando archivo de origen "../src/gameloop.cpp")
   
   inputhandler.cpp
-F:\Chess\ChessGame\include\board.h(10,10): warning C4067: símbolos (token) inesperados después de la directiva del preprocesador; se esperaba una nueva línea
+E:\Self-learning\Chess\ChessGame\include\board.h(10,10): warning C4067: símbolos (token) inesperados después de la directiva del preprocesador; se esperaba una nueva línea
   (compilando archivo de origen "../src/inputhandler.cpp")
   
-F:\Chess\ChessGame\src\inputhandler.cpp(11,65): warning C4244: 'argumento': conversión de 'int' a 'T'; posible pérdida de datos
-F:\Chess\ChessGame\src\inputhandler.cpp(11,65): warning C4244:         with
-F:\Chess\ChessGame\src\inputhandler.cpp(11,65): warning C4244:         [
-F:\Chess\ChessGame\src\inputhandler.cpp(11,65): warning C4244:             T=float
-F:\Chess\ChessGame\src\inputhandler.cpp(11,65): warning C4244:         ]
-F:\Chess\ChessGame\src\inputhandler.cpp(11,44): warning C4244: 'argumento': conversión de 'int' a 'T'; posible pérdida de datos
-F:\Chess\ChessGame\src\inputhandler.cpp(11,44): warning C4244:         with
-F:\Chess\ChessGame\src\inputhandler.cpp(11,44): warning C4244:         [
-F:\Chess\ChessGame\src\inputhandler.cpp(11,44): warning C4244:             T=float
-F:\Chess\ChessGame\src\inputhandler.cpp(11,44): warning C4244:         ]
+E:\Self-learning\Chess\ChessGame\src\inputhandler.cpp(11,65): warning C4244: 'argumento': conversión de 'int' a 'T'; posible pérdida de datos
+E:\Self-learning\Chess\ChessGame\src\inputhandler.cpp(11,65): warning C4244:         with
+E:\Self-learning\Chess\ChessGame\src\inputhandler.cpp(11,65): warning C4244:         [
+E:\Self-learning\Chess\ChessGame\src\inputhandler.cpp(11,65): warning C4244:             T=float
+E:\Self-learning\Chess\ChessGame\src\inputhandler.cpp(11,65): warning C4244:         ]
+E:\Self-learning\Chess\ChessGame\src\inputhandler.cpp(11,44): warning C4244: 'argumento': conversión de 'int' a 'T'; posible pérdida de datos
+E:\Self-learning\Chess\ChessGame\src\inputhandler.cpp(11,44): warning C4244:         with
+E:\Self-learning\Chess\ChessGame\src\inputhandler.cpp(11,44): warning C4244:         [
+E:\Self-learning\Chess\ChessGame\src\inputhandler.cpp(11,44): warning C4244:             T=float
+E:\Self-learning\Chess\ChessGame\src\inputhandler.cpp(11,44): warning C4244:         ]
   ChessGame.cpp
-F:\Chess\ChessGame\include\board.h(10,10): warning C4067: símbolos (token) inesperados después de la directiva del preprocesador; se esperaba una nueva línea
+E:\Self-learning\Chess\ChessGame\include\board.h(10,10): warning C4067: símbolos (token) inesperados después de la directiva del preprocesador; se esperaba una nueva línea
   (compilando archivo de origen "ChessGame.cpp")
   
   Generando código...
-  ChessGame.vcxproj -> F:\Chess\ChessGame\x64\Debug\ChessGame.exe
+  ChessGame.vcxproj -> E:\Self-learning\Chess\ChessGame\x64\Debug\ChessGame.exe
