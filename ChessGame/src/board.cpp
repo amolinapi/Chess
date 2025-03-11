@@ -190,14 +190,14 @@ void Board::handleClick(Vector2f mousePos)
                         }
                     }
 
-                    std::cout << "Pieza seleccionada en (" << x << ", " << y << ")\n";
+                    std::cout << "Selected piece on (" << x << ", " << y << ")\n";
                 }
                 else {
                     int startX = selectedPiece.first;
                     int startY = selectedPiece.second;
 
-                    std::cout << "Intentando mover de (" << startX << ", " << startY
-                        << ") a (" << x << ", " << y << ")\n";
+                    std::cout << "Trying to move from (" << startX << ", " << startY
+                        << ") to (" << x << ", " << y << ")\n";
 
                     movePiece(startX, startY, x, y);
                     selectedPiece = { -1, -1 };
@@ -218,8 +218,8 @@ void Board::handleClick(Vector2f mousePos)
         int targetX = (mousePos.x - board_sprite.getGlobalBounds().left) / tileSize;
         int targetY = (mousePos.y - board_sprite.getGlobalBounds().top) / tileSize;
 
-        std::cout << "Intentando mover de (" << startX << ", " << startY
-            << ") a (" << targetX << ", " << targetY << ")\n";
+        std::cout << "Trying to move from (" << startX << ", " << startY
+            << ") to (" << targetX << ", " << targetY << ")\n";
 
         movePiece(startX, startY, targetX, targetY);
         selectedPiece = { -1, -1 }; 
@@ -233,35 +233,35 @@ void Board::movePiece(int startX, int startY, int endX, int endY)
     
     // Verificar que la casilla de origen contiene una pieza
     if (!grid[startX][startY]) {
-        std::cout << "No hay pieza en la posición de origen.\n";
+        std::cout << "No piece found.\n";
         return;
     }
 
     if (grid[startX][startY]->getColorSide() != turn) {
-        std::cout << "No es el turno de esta ficha";
+        std::cout << "Wrong turn";
         return;
     }
 
     // Verificar que la casilla de destino está dentro del tablero
     if (endX < 0 || endX >= 8 || endY < 0 || endY >= 8) {
-        std::cout << "Movimiento fuera de los límites del tablero.\n";
+        std::cout << "Out of bounds movement.\n";
         return;
     }
 
     // Verificar que la pieza puede moverse a esa casilla (implementado en cada pieza)
     if (!grid[startX][startY]->canMoveTo(startX, startY, endX, endY, grid)) {
-        std::cout << "Movimiento no permitido según las reglas de la pieza.\n";
+        std::cout << "Invalid movement.\n";
         return;
     }
 
     // Si hay una pieza en la casilla de destino, "capturarla" (en este caso, eliminarla)
     if (grid[endX][endY]) {
         if (dynamic_cast<King*>(grid[endX][endY].get())) {
-            std::cout << "¡El rey ha sido capturado! Reiniciando partida...\n";
+            std::cout << "¡King captured! Restarting game...\n";
             resetGame();
             return;
         }
-        std::cout << "Capturando pieza en (" << endX << ", " << endY << ")\n";
+        std::cout << "Capture piece on (" << endX << ", " << endY << ")\n";
         captureSound.play();
         grid[endX][endY] = nullptr;
     }
@@ -289,7 +289,7 @@ void Board::movePiece(int startX, int startY, int endX, int endY)
 
     checkGameState();
 
-    std::cout << "Pieza movida de (" << startX << ", " << startY << ") a (" << endX << ", " << endY << ")\n";
+    std::cout << "Moving piece from (" << startX << ", " << startY << ") to (" << endX << ", " << endY << ")\n";
 }
 
 void Board::resetGame()
@@ -427,17 +427,17 @@ bool Board::isCheckmate(Piece::PieceColor isWhite)
 void Board::checkGameState()
 {
     if (isCheckmate(Piece::PieceColor::WHITE)) {
-        std::cout << "¡Jaque mate! Las negras ganan." << std::endl;
+        std::cout << "¡Checkmate! Black wins." << std::endl;
         resetGame();
     }
     else if (isCheckmate(Piece::PieceColor::BLACK)) {
-        std::cout << "¡Jaque mate! Las blancas ganan." << std::endl;
+        std::cout << "¡Checkmate! White wins." << std::endl;
         resetGame();
     }
     else if (isKingInCheck(Piece::PieceColor::WHITE)) {
-        std::cout << "¡Las blancas están en jaque!" << std::endl;
+        std::cout << "¡Whites are in check!" << std::endl;
     }
     else if (isKingInCheck(Piece::PieceColor::BLACK)) {
-        std::cout << "¡Las negras están en jaque!" << std::endl;
+        std::cout << "¡Blacks are in check!" << std::endl;
     }
 }

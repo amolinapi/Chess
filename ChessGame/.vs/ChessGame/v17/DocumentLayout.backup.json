@@ -42,8 +42,7 @@
               "RelativeToolTip": "include\\piece.h",
               "ViewState": "AgIAAAgAAAAAAAAAAAAAAAQAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-03-07T14:40:42.819Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-07T14:40:42.819Z"
             },
             {
               "$type": "Document",
@@ -96,7 +95,7 @@
               "RelativeDocumentMoniker": "src\\board.cpp",
               "ToolTip": "E:\\Self-learning\\Chess\\ChessGame\\src\\board.cpp",
               "RelativeToolTip": "src\\board.cpp",
-              "ViewState": "AgIAAFUBAAAAAAAAAAAAAGgBAAAaAAAAAAAAAA==",
+              "ViewState": "AgIAAEUAAAAAAAAAAAAAAMAAAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-03-05T17:22:49.8Z",
               "EditorCaption": ""
